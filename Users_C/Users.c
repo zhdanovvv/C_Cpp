@@ -22,12 +22,9 @@ typedef struct User {
 } User;
 
 User* Add_user(User* head , char n_m[] , char s_n[]);
-User* Find_userAAAAAAA(User* head , int* i_d);
-void Print_listAAAAAAA(User* head);
+User* Find_user_(User* head , int* i_d);
+void Print_user_(User* head);
 
-//int struct User::a = 10;
-
-//(struct User* (*Add_user)());
 
 User* Add_user(User* head , char n_m[] , char s_n[])
 {
@@ -37,8 +34,8 @@ User* Add_user(User* head , char n_m[] , char s_n[])
 	tmp->id = user_count;
 	strcpy(tmp->name , n_m);
 	strcpy(tmp->surname , s_n);
-	tmp->Find_user = &Find_userAAAAAAA;
-	tmp->Print_list = &Print_listAAAAAAA;
+	tmp->Find_user = &Find_user_;
+	tmp->Print_list = &Print_user_;
 	if(head != NULL) {
 		while(head->next) {
 			head = head->next;
@@ -52,7 +49,7 @@ User* Add_user(User* head , char n_m[] , char s_n[])
 
 
 
-User* Find_userAAAAAAA(User* head , int* i_d)
+User* Find_user_(User* head , int* i_d)
 {		
 	User* ptr = head;
 	while(ptr != NULL){		   
@@ -102,7 +99,7 @@ User* Del_user(User* head , User* p)
 }
 
 
-void Print_listAAAAAAA(User* head)
+void Print_user_(User* head)
 {
     User* tmp = NULL;
 	printf("----------- list of users ------------\n");

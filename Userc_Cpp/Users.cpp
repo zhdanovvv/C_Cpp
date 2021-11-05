@@ -1,12 +1,9 @@
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <vector>
 #include <map>
-#include <utility>
 #include <iterator>
 #include <algorithm>
-#include <typeinfo>
 
 
 class Document
@@ -60,9 +57,9 @@ void Document::print()
 {
 	int str;
 	std::map <std::string, int> thisDocument = this -> get_keyValue();
-	std::cout << "If you wont print document-- enter 0" << "\n";
-	std::cout << "If you wont print key -- enter 1" << "\n";
-	std::cout << "If you wont print value -- enter 2" << "\n";
+	std::cout << "If you want to print document-- enter 0" << "\n";
+	std::cout << "If you want to print key -- enter 1" << "\n";
+	std::cout << "If you want to print value -- enter 2" << "\n";
 	std::cin >> str;
 	if(str == 0)
 		{
@@ -126,12 +123,12 @@ int main()
 		}
     	in.close();	
 	while(true)
-		{
-			a -> print();			
-			std::cout << "Enter key" << std::endl;			
+		{						
+			std::cout << "Enter key to add a new user in the document" << std::endl;			
 			std::cin >> str;
 			randNumber = rand() % 1000 + 1;
-			a -> fastUpload(str, randNumber);														
+			a -> fastUpload(str, randNumber);
+			a -> print();				
 		}		
 	a -> ~Document();
 	return 0;
