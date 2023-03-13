@@ -36,9 +36,9 @@ void recv_func(int sock_id, char* recv_buf, int recv_buflen)
 	mtx.unlock();
 	int iResult = recv(sock_id, recv_buf, recv_buflen, 0); 		
 	if(iResult > 0)
-	 	{
-	 		printf("%s %d\n", "Bytes recieved", iResult);
-	 	}
+	{
+		printf("%s %d\n", "Bytes recieved", iResult);
+	}
  	mtx.lock();
  	return;
 }
@@ -47,10 +47,10 @@ void send_func(int sock_id, char* recv_buf, int recv_buflen)
 {	
 	mtx.unlock();					 	
 	int iSendResult = send(sock_id, recv_buf, sizeof(recv_buf), 0);
-	if(iSendResult > 0)
-		{
-			printf("%s %d\n", "Bytes send", iSendResult);		
-		}
+	if(iSendResult > 0)	
+	{
+	    printf("%s %d\n", "Bytes send", iSendResult);
+	}
 	mtx.lock();
 	return;
 }	
@@ -67,14 +67,14 @@ int main(int argc, char* argv[])
 // Initialize Winsock
 		iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
 		if (iResult != 0) 
-			{
-				printf("WSAStartup failed: %d\n", iResult);
-				return 1;
-			}
+		{
+			printf("WSAStartup failed: %d\n", iResult);
+			return 1;
+		}
 		else
-			{
-				printf("WSAStartup executed: %d\n", iResult);
-			}	
+		{
+			printf("WSAStartup executed: %d\n", iResult);
+		}	
 
 		struct addrinfo *result = NULL;
 		//struct addrinfo *ptr = NULL;
@@ -89,30 +89,30 @@ int main(int argc, char* argv[])
 // Resolve the local address and port to be used by the server
 		iResult = getaddrinfo(DEFAULT_ADDRESS, DEFAULT_PORT, &hints, &result);
 		if (iResult != 0) 
-			{
-				printf("getaddrinfo failed: %d\n", iResult);
-				WSACleanup();
-				return 1;
-			}
+		{
+			printf("getaddrinfo failed: %d\n", iResult);
+			WSACleanup();
+			return 1;
+		}
 		else
-			{
-				printf("getaddrinfo executed: %d\n", iResult);
-			}	
+		{
+			printf("getaddrinfo executed: %d\n", iResult);
+		}	
 
 // Create a SOCKET for the server to listen for client connections
 		SOCKET ListenSocket = INVALID_SOCKET;
 		ListenSocket = socket(result->ai_family, result->ai_socktype, result->ai_protocol);
 		if (ListenSocket == INVALID_SOCKET) 
-			{
-				printf("Error at socket(): %d\n", WSAGetLastError());
-				freeaddrinfo(result);
-				WSACleanup();
-				return 1;
-			}
+		{
+			printf("Error at socket(): %d\n", WSAGetLastError());
+			freeaddrinfo(result);
+			WSACleanup();
+			return 1;
+		}
 		else
-			{
-				printf("Socket fd: %d\n", (int)ListenSocket);
-			}
+		{
+			printf("Socket fd: %d\n", (int)ListenSocket);
+		}
 			
 // Setup the TCP listening socket
 		iResult = bind( ListenSocket, result->ai_addr, (int)result->ai_addrlen);
@@ -120,30 +120,30 @@ int main(int argc, char* argv[])
 		int iOptLen = sizeof (int);
 		setsockopt(ListenSocket, SOL_SOCKET, SO_REUSEADDR, (char *) &iOptVal, iOptLen);
 		if (iResult == SOCKET_ERROR) 
-			{
-				printf("bind failed with error: %d\n", WSAGetLastError());
-				freeaddrinfo(result);
-				closesocket(ListenSocket);
-				WSACleanup();
-				return 1;
-			}
+    		{
+        	    printf("bind failed with error: %d\n", WSAGetLastError());
+        	    freeaddrinfo(result);
+        	    closesocket(ListenSocket);
+        	    WSACleanup();
+        	    return 1;
+    		}
 		else
-			{
-				printf("bind not failed: %d\n", iResult);
-			}
+    		{
+        	    printf("bind not failed: %d\n", iResult);
+    		}
 			
 // Listening on a Socket
 		if (listen( ListenSocket, SOMAXCONN ) == SOCKET_ERROR) 
-			{
-				printf("Listen failed with error: %d\n", WSAGetLastError());
-				closesocket(ListenSocket);
-				WSACleanup();
-				return 1;
-			}
+    		{
+        	    printf("Listen failed with error: %d\n", WSAGetLastError());
+        	    closesocket(ListenSocket);
+        	    WSACleanup();
+        	    return 1;
+    		}
 		else
-			{
-				printf("Listen not failed\n\n\n");
-			}
+    		{
+        	    printf("Listen not failed\n\n\n");
+    		}
 
 			
 // Accept a client socket
@@ -151,56 +151,51 @@ int main(int argc, char* argv[])
 		SOCKET ClientSocket = INVALID_SOCKET;
 		ClientSocket = accept(ListenSocket, NULL, NULL);
 		if (ClientSocket == INVALID_SOCKET) 
-			{
-				printf("accept failed: %d\n", WSAGetLastError());
-				closesocket(ListenSocket);
-				WSACleanup();
-				return 1;
-			}
+    		{
+        	    printf("accept failed: %d\n", WSAGetLastError());
+        	    closesocket(ListenSocket);
+        	    WSACleanup();
+        	    return 1;
+    		}
 		else
-			{
-				printf("accept not failed: %d\n", (int)ClientSocket);
-			}
+    		{
+        	    printf("accept not failed: %d\n", (int)ClientSocket);
+    		}
 
-			
 		char recvbuf[DEFAULT_BUFLEN];
 		int iSendResult;
 		int recvbuflen = DEFAULT_BUFLEN;
 		
 // Receive 
 		do 
-			{
-				iResult = recv(ClientSocket, recvbuf, recvbuflen, 0);
-				if (iResult > 0) 
-					{
-						printf("Bytes received: %d\n", iResult);
-
+    		{
+        	    iResult = recv(ClientSocket, recvbuf, recvbuflen, 0);
+        	    if (iResult > 0)
+            	    {
+                	printf("Bytes received: %d\n", iResult);
 // Echo the buffer back to the sender
-						iSendResult = send(ClientSocket, recvbuf, iResult, 0);
-						if (iSendResult == SOCKET_ERROR) 
-							{
-								printf("send failed: %d\n", WSAGetLastError());
-								closesocket(ClientSocket);
-								WSACleanup();
-								return 1;
-							}
-						printf("Bytes sent: %d\n", iSendResult);			
-					} 
-					
-				else if (iResult == 0)
-					{
-						printf("Connection closing...\n");
-					}
-						
-				else 
-					{
-						printf("recv failed: %d\n", WSAGetLastError());
-						closesocket(ClientSocket);
-						WSACleanup();
-						return 1;
-					}
-					
-			} while (true);
+                	iSendResult = send(ClientSocket, recvbuf, iResult, 0);
+                	if (iSendResult == SOCKET_ERROR)
+                	{
+                    	    printf("send failed: %d\n", WSAGetLastError());
+                    	    closesocket(ClientSocket);
+                    	    WSACleanup();
+                    	    return 1;
+                	}
+                	printf("Bytes sent: %d\n", iSendResult);
+            	    }
+        	    else if (iResult == 0)
+            	    {
+                	printf("Connection closing...\n");
+            	    }
+        	    else
+            	    {
+                	printf("recv failed: %d\n", WSAGetLastError());
+                	closesocket(ClientSocket);
+                	WSACleanup();
+                	return 1;
+            	    }
+    		} while (true);
 	#endif
 
 #else
@@ -215,14 +210,14 @@ int main(int argc, char* argv[])
 				
 		ls = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 		if(ls == -1)
-			{
-				printf("%s\n" ,"Server failed!");
-				return 1;
-			}
+    		{
+        	    printf("%s\n" ,"Server failed!");
+        	    return 1;
+    		}
 		else
-			{
-				printf("%s\n" ,"Server executed!");
-			}
+    		{
+        	    printf("%s\n" ,"Server executed!");
+    		}
 		setsockopt(ls, SOL_SOCKET, SO_REUSEADDR, 0, 0);
 		memset(&addr , 0, sizeof(addr));
 		
@@ -233,60 +228,58 @@ int main(int argc, char* argv[])
 // Setup the TCP listening socket		
 		
 		if ((err = bind(ls, (struct sockaddr*) &addr, sizeof(addr))) < 0)
-			{
-				 close(ls);
-				 printf("%s\n" ,"Binding failed");
-				 return 1;
-			}
+    		{
+            	    close(ls);
+            	    printf("%s\n" ,"Binding failed");
+            	    return 1;
+    		}
 		else 
-			{
-				printf("%s\n", "Binding success");
-			}
+    		{
+        	    printf("%s\n", "Binding success");
+    		}
 			
 // Listening on a Socket
 			
 		if (listen(ls, 25) < 0) 
-			{ 
-				 close(ls);
-				 printf("%s\n" ,"Listening error!");
-				 return 1;
-			}
+    		{
+            	    close(ls);
+            	    printf("%s\n" ,"Listening error!");
+            	    return 1;
+    		}
 		else
-			{
-				printf("%s\n", "Listening success");
-			}
+    		{
+        	    printf("%s\n", "Listening success");
+    		}
 			
 // Accept a client socket
 			
 		rc = accept(ls, NULL, NULL);				
 		if (rc < 0) 
-			{
-				printf("%s\n", "Accept failed");	
-			}
+    		{
+        	    printf("%s\n", "Accept failed");
+    		}
 		
 		else if (rc > 0 ) 
-			 { 					 				 	 
-				 printf("%s\n", "Accept not failed");						 				 
-			 }				
+        	{
+            	    printf("%s\n", "Accept not failed");
+        	}
 			
 		do
-			{											
-																
-				if(rc)
-					{
+    		{
+        	    if(rc)
+        	    {
 // Receive
-						std::thread thr_recv(recv_func, rc, recvbuf, recvbuflen);
-						thr_recv.join();
-						
+            		std::thread thr_recv(recv_func, rc, recvbuf, recvbuflen);
+            		thr_recv.join();
+
 // Echo the buffer back to the sender
-																		
-						std::thread thr_send(send_func, rc, recvbuf, recvbuflen);		 				
-		 				thr_send.join();		 					
-					}																						
- 				 	 				 				 				 				 		
-			}while (true); 
+
+            		std::thread thr_send(send_func, rc, recvbuf, recvbuflen);
+            		thr_send.join();
+        	    }
+
+    		}while (true);
 #endif		
-	
 	return 0;
 }
 

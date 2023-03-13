@@ -40,9 +40,9 @@ void recv_func(int sock_id, char* recv_buf, int recv_buflen)
 	mtx.unlock();
 	int iResult = recv(sock_id, recv_buf, recv_buflen, 0); 		
 	if(iResult > 0)
-    {
-        printf("%s %d\n", "Bytes recieved", iResult);
-    }
+	{
+    	    printf("%s %d\n", "Bytes recieved", iResult);
+	}
  	mtx.lock();
  	return;
 }
@@ -52,9 +52,9 @@ void send_func(int sock_id, const char* send_buf, int send_buflen)
 	mtx.unlock();					 	
 	int iSendResult = send(sock_id, send_buf, send_buflen, 0);
 	if(iSendResult > 0)
-    {
-        printf("%s %d\n", "Bytes send", iSendResult);
-    }
+	{
+    	    printf("%s %d\n", "Bytes send", iSendResult);
+	}
 	mtx.lock();
 	return;
 }
@@ -70,14 +70,14 @@ int main(int argc, char* argv[])
 // Initialize Winsock
 		iResult = WSAStartup(MAKEWORD(2,2), &wsaData);
 		if (iResult != 0) 
-        {
-            printf("WSAStartup failed: %d\n", iResult);
-            return 1;
-        }
+    		{
+        	    printf("WSAStartup failed: %d\n", iResult);
+        	    return 1;
+    		}
 		else
-        {
-            printf("WSAStartup executed: %d\n", iResult);
-        }
+    		{
+        	    printf("WSAStartup executed: %d\n", iResult);
+    		}
 		
 		struct addrinfo *result = NULL, *ptr = NULL, hints;
 
@@ -89,14 +89,13 @@ int main(int argc, char* argv[])
 // Resolve the server address and port
 		iResult = getaddrinfo(DEFAULT_ADDRESS, DEFAULT_PORT, &hints, &result);
 		if (iResult != 0)
-        {
-            printf("getaddrinfo failed: %d\n", iResult);
-            WSACleanup();
-            return 1;
-        }
+    		{
+        	    printf("getaddrinfo failed: %d\n", iResult);
+        	    WSACleanup();
+        	    return 1;
+    		}
 		
 		SOCKET ConnectSocket = INVALID_SOCKET;
-		
 		
 // Attempt to connect to the first address returned by
 // the call to getaddrinfo
@@ -105,24 +104,24 @@ int main(int argc, char* argv[])
 // Create a SOCKET for connecting to server
 		ConnectSocket = socket(ptr->ai_family, ptr->ai_socktype, ptr->ai_protocol);
 		if (ConnectSocket == INVALID_SOCKET) 
-        {
-            printf("Error at socket(): %d\n", WSAGetLastError());
-            freeaddrinfo(result);
-            WSACleanup();
-            return 1;
-        }
+    		{
+        	    printf("Error at socket(): %d\n", WSAGetLastError());
+        	    freeaddrinfo(result);
+        	    WSACleanup();
+        	    return 1;
+    		}
 		else
-        {
-            printf("getaddrinfo executed: %d\n", iResult);
-        }
+    		{
+        	    printf("getaddrinfo executed: %d\n", iResult);
+    		}
 		
 // Connect to server.
 		iResult = connect(ConnectSocket, ptr->ai_addr, (int)ptr->ai_addrlen);
 		if (iResult == SOCKET_ERROR) 
-        {
-            closesocket(ConnectSocket);
-            ConnectSocket = INVALID_SOCKET;
-        }
+    		{
+        	    closesocket(ConnectSocket);
+        	    ConnectSocket = INVALID_SOCKET;
+    		}	
 			
 
 // Should really try the next address returned by getaddrinfo
@@ -132,15 +131,15 @@ int main(int argc, char* argv[])
 
 		freeaddrinfo(result);
 		if (ConnectSocket == INVALID_SOCKET) 
-        {
-            printf("Unable to connect to server!\n");
-            WSACleanup();
-            return 1;
-        }
+    		{
+        	    printf("Unable to connect to server!\n");
+        	    WSACleanup();
+        	    return 1;
+    		}
 		else
-        {
-            printf("Connect to server %d\n", iResult);
-        }
+    		{
+        	    printf("Connect to server %d\n", iResult);
+    		}
 			
 		std::cout << "Enter someting data: " << "\n\n";	
 		char* input_str = new char[DEFAULT_BUFLEN];
@@ -156,27 +155,28 @@ int main(int argc, char* argv[])
 		{
 		
 // Send an initial buffer
-
 			iResult = send(ConnectSocket, sendbuf, (int)strlen(sendbuf), 0);
 			if (iResult == SOCKET_ERROR) 
-            {
-                printf("send failed: %d\n", WSAGetLastError());
-                closesocket(ConnectSocket);
-                WSACleanup();
-                return 1;
-            }
-
+        		{
+            		    printf("send failed: %d\n", WSAGetLastError());
+            		    closesocket(ConnectSocket);
+            		    WSACleanup();
+            		    return 1;
+        		}
 			printf("Bytes Sent: %d\n", iResult);
 			iResult = recv(ConnectSocket, recvbuf, recvbuflen, 0);
 			if (iResult > 0)
-            {
-                printf("Bytes received: %d\n", iResult);
-            }
+        		{
+            		    printf("Bytes received: %d\n", iResult);
+        		}
 			else if (iResult == 0)
-				printf("Connection closed\n");
+			{
+			    printf("Connection closed\n");
+			}
 			else
-				printf("recv failed: %d\n", WSAGetLastError());
-								
+			{
+			    printf("recv failed: %d\n", WSAGetLastError());
+			}
 		} while (true);		
 				
 	#endif
@@ -195,10 +195,10 @@ int main(int argc, char* argv[])
 		ls = socket( AF_INET, SOCK_STREAM, IPPROTO_TCP );
 		setsockopt(ls, SOL_SOCKET, SO_REUSEADDR, 0, 0);
 		if(ls == -1)
-        {
-            perror( "Socket can not created!\n");
-            return 1;
-        }
+    		{
+        	    perror( "Socket can not created!\n");
+        	    return 1;
+    		}
 		memset(&addr , 0, sizeof(addr));
 		
 		addr.sin_family = AF_INET;
@@ -208,29 +208,28 @@ int main(int argc, char* argv[])
 // Connect to server 	 	
 		
 		if (connect(ls, (const sockaddr*) &addr, sizeof(addr)) < 0)
-        {
-             close(ls);
-             perror("connection error!\n");
-             return 1;
-        }
+    		{
+            	    close(ls);
+            	    perror("connection error!\n");
+            	    return 1;
+    		}
 		else 
-        {
-             printf("%s\n", "connection success!");
-        }
-		
+    		{
+            	    printf("%s\n", "connection success!");
+    		}
 		do		
-        {
+    		{
 // Receive data until the server closes the connection
 
-            std::thread thr_send(send_func, ls, sendbuf, sendbuf_len);
-            thr_send.join();
+        	    std::thread thr_send(send_func, ls, sendbuf, sendbuf_len);
+        	    thr_send.join();
 
 // Send an initial buffer				
 
-            std::thread thr_recv(recv_func, ls, recvbuf, recvbuflen);
-            thr_recv.join();
+        	    std::thread thr_recv(recv_func, ls, recvbuf, recvbuflen);
+        	    thr_recv.join();
 
-        }while(true);
+    		}while(true);
 #endif
 		
 	return 0;	
