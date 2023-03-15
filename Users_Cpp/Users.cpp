@@ -62,29 +62,29 @@ void Document::print()
 	std::cout << "If you want to print value -- enter 2" << "\n";
 	std::cin >> str;
 	if(str == 0)
-		{
-			std::cout << "Document" << std::endl;
-			std::cout << "-----------------------------" << std::endl;			
-			for(auto myIterator : thisDocument)					
-				std::cout << myIterator.first << "\t\t\t" << myIterator.second << std::endl;				
-			std::cout << "-----------------------------" << std::endl;
-		}
+	{
+		std::cout << "Document" << std::endl;
+		std::cout << "-----------------------------" << std::endl;			
+		for(auto myIterator : thisDocument)					
+			std::cout << myIterator.first << "\t\t\t" << myIterator.second << std::endl;				
+		std::cout << "-----------------------------" << std::endl;
+	}
 	else if(str == 1)
-		{
-			std::cout << "Key" << std::endl;
-			std::cout << "-----------------------------" << std::endl;			
-			for(auto myIterator : thisDocument)					
-				std::cout << myIterator.first << std::endl;				
-			std::cout << "-----------------------------" << std::endl;	
-		}
+	{
+		std::cout << "Key" << std::endl;
+		std::cout << "-----------------------------" << std::endl;			
+		for(auto myIterator : thisDocument)					
+			std::cout << myIterator.first << std::endl;				
+		std::cout << "-----------------------------" << std::endl;	
+	}
 	else if(str == 2)
-		{
-			std::cout << "Value" << std::endl;
-			std::cout << "-----------------------------" << std::endl;			
-			for(auto myIterator : thisDocument)					
-				std::cout << myIterator.second << std::endl;				
-			std::cout << "-----------------------------" << std::endl;		
-		}			
+	{
+		std::cout << "Value" << std::endl;
+		std::cout << "-----------------------------" << std::endl;			
+		for(auto myIterator : thisDocument)					
+			std::cout << myIterator.second << std::endl;				
+		std::cout << "-----------------------------" << std::endl;		
+	}			
 	
 }
 
@@ -114,22 +114,22 @@ int main()
 	std::string ptrStr = "";
 	std::ifstream in("Users.txt"); 
 	if (in.is_open())
-		{
-			while (getline(in, str))
-				{            		
-					randNumber = rand() % 1000 + 1;
-					a -> fastUpload(str, randNumber);
-				}
-		}
-    	in.close();	
-	while(true)
-		{						
-			std::cout << "Enter key to add a new user in the document" << std::endl;			
-			std::cin >> str;
+	{
+		while (getline(in, str))
+		{            		
 			randNumber = rand() % 1000 + 1;
 			a -> fastUpload(str, randNumber);
-			a -> print();				
-		}		
+		}
+	}
+    	in.close();	
+	while(true)
+	{						
+		std::cout << "Enter key to add a new user in the document" << std::endl;			
+		std::cin >> str;
+		randNumber = rand() % 1000 + 1;
+		a -> fastUpload(str, randNumber);
+		a -> print();				
+	}		
 	a -> ~Document();
 	return 0;
 }
